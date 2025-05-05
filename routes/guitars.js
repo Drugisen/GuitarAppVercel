@@ -50,5 +50,15 @@ router.post('/', ensureAuth, jsonParser, async function (req, res, next) {
 	res.status(200).json({ success: true, message: "Guitar added successfully.", newGuitar });
 });
 
+// DELETE a guitar by ID
+router.delete('/:id', ensureAuth, jsonParser, async (req, res, next) => {
+    try {
+      await guitarService.deleteGuitar(req.params.id);
+      res.status(200).json({ success: true, message: "Guitar deleted successfully." });
+    } catch (error) {
+      next(error); // Pass errors to the error-handling middleware
+    }
+  });
+  
 module.exports = router;
 
